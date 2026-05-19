@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: busybox:latest
+    name: test-container
+    command: ["sh", "-c", "echo $(date) >> /data/message.txt && sleep 3600"]
+    volumeMounts:
+    - mountPath: /data
+      name: pvc-claim
+  volumes:
+  - name: pvc-claim
+    persistentVolumeClaim:
+      claimName: pvc
+ 

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dynamic-pod
+spec:
+  volumes:
+    - name: dynamic-storage
+      persistentVolumeClaim:
+        claimName: dynamic-pvc
+  containers:
+  - name: test-container
+    image: busybox:latest
+    command: ["sh", "-c", "echo dynamic-$(date) > /data/message.txt && sleep 3600"]
+    volumeMounts:
+    - mountPath: /data
+      name: dynamic-storage
